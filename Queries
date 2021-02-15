@@ -1,0 +1,14 @@
+CREATE DATABASE `blog`;
+CREATE TABLE `blog`.`users` (
+  `userId` BIGINT NOT NULL AUTO_INCREMENT,
+  `userName` VARCHAR(50) NULL UNIQUE DEFAULT NULL,
+  `mobile` VARCHAR(15) NULL UNIQUE,
+  `email` VARCHAR(50) NULL UNIQUE,
+  `password` VARCHAR(32) NOT NULL,
+  `role` enum('Author', 'Admin') DEFAULT 'Author',
+  `registeredAt` DATETIME NOT NULL,
+  `lastLogin` DATETIME NULL DEFAULT NULL,
+  `intro` TINYTEXT NULL DEFAULT NULL,
+  `profile` TEXT NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`)
+);
