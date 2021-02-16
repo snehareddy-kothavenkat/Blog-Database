@@ -1,14 +1,79 @@
 CREATE DATABASE `blog`;
-CREATE TABLE `blog`.`users` (
+
+CREATE TABLE `blog`.`user` (
   `userId` BIGINT NOT NULL AUTO_INCREMENT,
-  `userName` VARCHAR(50) NULL UNIQUE DEFAULT NULL,
-  `mobile` VARCHAR(15) NULL UNIQUE,
-  `email` VARCHAR(50) NULL UNIQUE,
+  `firstName`  VARCHAR(50) NOT NULL ,
+  `lastName` VARCHAR(50) NOT NULL ,
+  `mobile` BIGINT NOT NULL UNIQUE,
+  `email`  VARCHAR(50) NOT NULL UNIQUE,
   `password` VARCHAR(32) NOT NULL,
   `role` enum('Author', 'Admin') DEFAULT 'Author',
   `registeredAt` DATETIME NOT NULL,
-  `lastLogin` DATETIME NULL DEFAULT NULL,
-  `intro` TINYTEXT NULL DEFAULT NULL,
-  `profile` TEXT NULL DEFAULT NULL,
+  `lastLogin` DATETIME DEFAULT NULL,
+  `intro` TEXT DEFAULT NULL,
   PRIMARY KEY (`userId`)
+);
+
+CREATE TABLE `blog`.`post` (
+  `postId` BIGINT NOT NULL AUTO_INCREMENT,
+  `postName` VARCHAR(50) NOT NULL ,
+  `postTitle` VARCHAR(50) NOT NULL ,
+  `postedAt` DATETIME  DEFAULT NULL,
+  `updatedAt`  DATETIME  DEFAULT NULL,
+  `content` TEXT DEFAULT NULL,
+  PRIMARY KEY (`postId`)
+);
+
+CREATE TABLE `blog`.`category` (
+  `categoryId` BIGINT NOT NULL AUTO_INCREMENT,
+  `categoryName`  VARCHAR(50) NOT NULL ,
+  `createdAt`  DATETIME  DEFAULT NULL,
+  `updatedAt`  DATETIME  DEFAULT NULL,
+  `catCreatedBy`  VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`categoryId`),
+  FOREIGN KEY (`catCreatedBy`)
+    REFERENCES `blog`.`user` (`userId`)
+);
+
+CREATE TABLE `blog`.`tag` (
+  `tagId` BIGINT NOT NULL AUTO_INCREMENT,
+  `tagName` VARCHAR(50) NOT NULL ,
+  `createdAt`  DATETIME DEFAULT NULL,
+  `updatedAt`  DATETIME  DEFAULT NULL,
+  `tagCreatedBy`  VARCHAR(50) NOT NULL ,
+  PRIMARY KEY (`tagId`),
+  FOREIGN KEY (`tagCreatedBy`)
+    REFERENCES `blog`.`user` (`userId`)
+);
+
+CREATE TABLE `blog`.`like` (
+  `likeId` BIGINT NOT NULL AUTO_INCREMENT,
+  `likedAt` DATETIME  DEFAULT NULL,
+  `likedPost` BIGINT 
+  PRIMARY KEY (`tagId`),
+  FOREIGN KEY (`likedPost`)
+    REFERENCES `blog`.`post` (`postId`)
+);
+
+CREATE TABLE `blog`.`comment` (
+  `commentId` BIGINT NOT NULL AUTO_INCREMENT,
+  `commentAt` DATETIME DEFAULT NULL,
+  `commentPost` BIGINT ,
+  PRIMARY KEY (`commentId`),
+  FOREIGN KEY (`commentPost`)
+    REFERENCES `blog`.`post` (`postId`)
+);
+
+CREATE TABLE `blog`.`postDetails` (
+  `post` BIGINT NOT NULL  UNIQUE,
+  `category` BIGINT  ,
+  `tag` BIGINT  ,
+  `author` BIGINT  ,
+PRIMARY KEY (`post`),
+FOREIGN KEY (`category`)
+  REFERENCES `blog`.`category` (`categoryId`),
+FOREIGN KEY (`tag`)
+  REFERENCES `blog`.`tag` (`tagId`),
+FOREIGN KEY (`author`)
+  REFERENCES `blog`.`user` (`userId`)
 );
