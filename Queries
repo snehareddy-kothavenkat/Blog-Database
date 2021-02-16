@@ -17,7 +17,6 @@ CREATE TABLE `blog`.`user` (
 CREATE TABLE `blog`.`post` (
   `postId` BIGINT NOT NULL AUTO_INCREMENT,
   `postName` VARCHAR(50) NOT NULL ,
-  `postTitle` VARCHAR(50) NOT NULL ,
   `postedAt` DATETIME  DEFAULT NULL,
   `updatedAt`  DATETIME  DEFAULT NULL,
   `content` TEXT DEFAULT NULL,
