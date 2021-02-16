@@ -29,7 +29,7 @@ CREATE TABLE `blog`.`category` (
   `categoryName`  VARCHAR(50) NOT NULL ,
   `createdAt`  DATETIME  DEFAULT NULL,
   `updatedAt`  DATETIME  DEFAULT NULL,
-  `catCreatedBy`  VARCHAR(50) NOT NULL ,
+  `catCreatedBy`  BIGINT NOT NULL ,
   PRIMARY KEY (`categoryId`),
   FOREIGN KEY (`catCreatedBy`)
     REFERENCES `blog`.`user` (`userId`)
@@ -40,7 +40,7 @@ CREATE TABLE `blog`.`tag` (
   `tagName` VARCHAR(50) NOT NULL ,
   `createdAt`  DATETIME DEFAULT NULL,
   `updatedAt`  DATETIME  DEFAULT NULL,
-  `tagCreatedBy`  VARCHAR(50) NOT NULL ,
+  `tagCreatedBy`  BIGINT NOT NULL ,
   PRIMARY KEY (`tagId`),
   FOREIGN KEY (`tagCreatedBy`)
     REFERENCES `blog`.`user` (`userId`)
@@ -49,8 +49,8 @@ CREATE TABLE `blog`.`tag` (
 CREATE TABLE `blog`.`like` (
   `likeId` BIGINT NOT NULL AUTO_INCREMENT,
   `likedAt` DATETIME  DEFAULT NULL,
-  `likedPost` BIGINT 
-  PRIMARY KEY (`tagId`),
+  `likedPost` BIGINT, 
+  PRIMARY KEY (`likeId`),
   FOREIGN KEY (`likedPost`)
     REFERENCES `blog`.`post` (`postId`)
 );
