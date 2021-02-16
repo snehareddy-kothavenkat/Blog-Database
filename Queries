@@ -49,18 +49,24 @@ CREATE TABLE `blog`.`like` (
   `likeId` BIGINT NOT NULL AUTO_INCREMENT,
   `likedAt` DATETIME  DEFAULT NULL,
   `likedPost` BIGINT, 
+  `likedBy` BIGINT,
   PRIMARY KEY (`likeId`),
   FOREIGN KEY (`likedPost`)
-    REFERENCES `blog`.`post` (`postId`)
+    REFERENCES `blog`.`post` (`postId`),
+  FOREIGN KEY (`likedBy`)
+    REFERENCES `blog`.`user` (`userId`)
 );
 
 CREATE TABLE `blog`.`comment` (
   `commentId` BIGINT NOT NULL AUTO_INCREMENT,
   `commentAt` DATETIME DEFAULT NULL,
   `commentPost` BIGINT ,
+  `commentBy` BIGINT,
   PRIMARY KEY (`commentId`),
   FOREIGN KEY (`commentPost`)
-    REFERENCES `blog`.`post` (`postId`)
+    REFERENCES `blog`.`post` (`postId`),
+  FOREIGN KEY (`commentBy`)
+    REFERENCES `blog`.`user` (`userId`)
 );
 
 CREATE TABLE `blog`.`postDetails` (
